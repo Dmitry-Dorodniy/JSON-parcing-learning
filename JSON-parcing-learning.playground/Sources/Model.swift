@@ -1,6 +1,10 @@
 import Foundation
 
 struct Cards: Codable {
+    let cards: [Card]
+}
+
+struct Card: Codable {
     let name: String
     let manaCost: String
     let type: String
@@ -8,6 +12,4 @@ struct Cards: Codable {
     let setName: String
     let text: String
     let artist: String
-
-
 }
