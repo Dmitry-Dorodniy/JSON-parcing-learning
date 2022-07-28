@@ -1,6 +1,6 @@
 import Foundation
 
-struct Cards: Decodable {
+struct Cards: Codable {
     let name: String
     let manaCost: String
     let type: String

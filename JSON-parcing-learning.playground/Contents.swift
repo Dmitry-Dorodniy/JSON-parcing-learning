@@ -1,7 +1,6 @@
 import UIKit
 
 let magicCard = "https://api.magicthegathering.io/v1/cards?name=Lotus"
-
 //getData(urlRequest: magicCard)
 
 let masterServerURL = "https://api.magicthegathering.io"
