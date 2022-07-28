@@ -6,7 +6,7 @@ struct Cards: Codable {
 
 struct Card: Codable {
     let name: String
-    let manaCost: String
+    let manaCost: String?
     let type: String
     let rarity: String
     let setName: String

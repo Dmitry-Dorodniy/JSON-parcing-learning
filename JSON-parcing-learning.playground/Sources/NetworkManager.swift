@@ -14,7 +14,7 @@ public class NetworkManager {
 
     var cards = [Card]()
     
-    public func getData(urlRequest: URL?) {
+    public func getDataFrom(urlRequest: URL?) {
 
         let session = URLSession(configuration: sessionConfiguration)
         //    let urlRequest = URL(string: urlRequest)
@@ -44,9 +44,27 @@ public class NetworkManager {
         do {
             let decoded = try decoder.decode(Cards.self, from: data)
             cards = decoded.cards
-            print(cards)
+//            print(cards)
+//            decoded.cards.map { card in
+//                printInfoOf(card)
+//            }
+
+            cards.map { card in
+                printInfoOf(card)
+            }
         } catch {
             print("Failed to decode JSON")
         }
+    }
+
+  func printInfoOf(_ card: Card) {
+        print("""
+    Название карты: \(card.name)
+    Требует маны: \(card.manaCost  ?? "Не требует маны")
+    Тип: \(card.type)
+    Редкость: \(card.rarity)
+    Название сета: \(card.setName)
+    Создатель: \(card.artist)
+    """)
     }
 }

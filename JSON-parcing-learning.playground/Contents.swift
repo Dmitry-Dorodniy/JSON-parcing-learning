@@ -1,7 +1,7 @@
 import UIKit
 
 let network = NetworkManager()
-let magicCard = "https://api.magicthegathering.io/v1/cards?name=Lotus"
+//let magicCard = "https://api.magicthegathering.io/v1/cards?name=Lotus"
 //getData(urlRequest: magicCard)
 
 let masterServerURL = "https://api.magicthegathering.io"
@@ -13,4 +13,4 @@ let magicUrl = makeRequestUrl(masterUrl: masterServerURL,
                               path: urlPath,
                               queryItems: [urlCardName])
 
-network.getData(urlRequest: magicUrl)
+network.getDataFrom(urlRequest: magicUrl)
