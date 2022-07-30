@@ -4,6 +4,9 @@ struct Cards: Codable {
     let cards: [Card]
 
     static func printInfoAbout(_ cards: Cards) {
+
+        var printingCount = 0
+
         _ = cards.cards.map {  card in
             guard card.name == "Opt" || card.name == "Black Lotus" else { return }
             print("""
@@ -17,8 +20,13 @@ struct Cards: Codable {
     Художник: \(card.artist)
 
     """)
+            printingCount += 1
         }
-        print("Количество полученных карт: \(cards.cards.count)\n\n")
+        print("""
+    Количество полученных карт: \(cards.cards.count)
+    Количество отфильтрованных карт \(printingCount)
+
+    """)
     }
 }
 
