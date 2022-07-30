@@ -12,7 +12,7 @@ public class NetworkManager {
         return configuration
     }()
 
-    var cards = [Card]()
+//    var cards = [Card]()
     
     public func getDataFrom(urlRequest: URL?) {
 
@@ -29,8 +29,8 @@ public class NetworkManager {
 
                 self.jsonDecoder(data: data)
 
-                let dataAsString = String(data: data, encoding: .utf8)
-              print("Get data: \n\(dataAsString ?? "nothing")\n")
+//                let dataAsString = String(data: data, encoding: .utf8)
+//              print("Get data: \n\(dataAsString ?? "nothing")\n")
 
             } else if let responce = responce as? HTTPURLResponse {
                 print("Error status from server: \(responce.statusCode)\n")
@@ -43,28 +43,28 @@ public class NetworkManager {
         let decoder = JSONDecoder()
         do {
             let decoded = try decoder.decode(Cards.self, from: data)
-            cards = decoded.cards
-//            print(cards)
-//            decoded.cards.map { card in
-//                printInfoOf(card)
-//            }
+//            cards = decoded.cards
+            printInfoAbout(decoded.cards)
 
-            cards.map { card in
-                printInfoOf(card)
-            }
         } catch {
             print("Failed to decode JSON")
         }
     }
 
-  func printInfoOf(_ card: Card) {
+    func printInfoAbout(_ cards: [Card]) {
+
+    cards.map {  card in
         print("""
+    ****************************************************
+
     Название карты: \(card.name)
-    Требует маны: \(card.manaCost  ?? "Не требует маны")
-    Тип: \(card.type)
+    Мана: \(card.manaCost  ?? "Не требует маны")
+    Тип карты: \(card.type)
     Редкость: \(card.rarity)
     Название сета: \(card.setName)
-    Создатель: \(card.artist)
+    Художник: \(card.artist)
+
     """)
+      }
     }
 }
