@@ -20,14 +20,17 @@ public class NetworkManager {
         //    let urlRequest = URL(string: urlRequest)
         guard let url = urlRequest else { return }
 
-        session.dataTask(with: url) { data, responce, error in
+        session.dataTask(with: url) { [weak self] data, responce, error in
+
+            guard let strongSelf = self else { return }
+
             if error != nil {
                 print("Error: \(error?.localizedDescription ?? "")")
             } else if let responce = responce as? HTTPURLResponse, responce.statusCode == 200 {
-                print("Response status from server: \(responce.statusCode)\n")
+                print("Success server status: \(responce.statusCode)\n")
                 guard let data = data else { return }
 
-                self.jsonDecoder(data: data)
+                strongSelf.jsonDecoder(data: data)
 
 //                let dataAsString = String(data: data, encoding: .utf8)
 //              print("Get data: \n\(dataAsString ?? "nothing")\n")
@@ -43,8 +46,13 @@ public class NetworkManager {
         let decoder = JSONDecoder()
         do {
             let decoded = try decoder.decode(Cards.self, from: data)
-//            cards = decoded.cards
-            printInfoAbout(decoded.cards)
+
+//            cards = decoded.card
+            DispatchQueue.main.async {
+                self.printInfoAbout(decoded.cards)
+            }
+
+
 
         } catch {
             print("Failed to decode JSON")
@@ -52,19 +60,19 @@ public class NetworkManager {
     }
 
     func printInfoAbout(_ cards: [Card]) {
-
-    cards.map {  card in
+   _ = cards.map {  card in
         print("""
     ****************************************************
 
     Название карты: \(card.name)
     Мана: \(card.manaCost  ?? "Не требует маны")
-    Тип карты: \(card.type)
+    Тип карты: \(card.typeOfCard)
     Редкость: \(card.rarity)
     Название сета: \(card.setName)
     Художник: \(card.artist)
 
     """)
       }
+        print("Количество полученных карт: \(cards.count)")
     }
 }
