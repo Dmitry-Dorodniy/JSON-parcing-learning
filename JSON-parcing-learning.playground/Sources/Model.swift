@@ -21,7 +21,5 @@ struct Card: Codable {
         case setName
         case text
         case artist
-
-
     }
 }

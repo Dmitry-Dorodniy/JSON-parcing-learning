@@ -12,8 +12,6 @@ public class NetworkManager {
         return configuration
     }()
 
-//    var cards = [Card]()
-    
     public func getDataFrom(urlRequest: URL?) {
 
         let session = URLSession(configuration: sessionConfiguration)
@@ -27,52 +25,29 @@ public class NetworkManager {
             if error != nil {
                 print("Error: \(error?.localizedDescription ?? "")")
             } else if let responce = responce as? HTTPURLResponse, responce.statusCode == 200 {
-                print("Success server status: \(responce.statusCode)\n")
+                print("Success server status: \(HTTPURLResponse.localizedString(forStatusCode: responce.statusCode))\n")
                 guard let data = data else { return }
-
+                
                 strongSelf.jsonDecoder(data: data)
-
-//                let dataAsString = String(data: data, encoding: .utf8)
-//              print("Get data: \n\(dataAsString ?? "nothing")\n")
-
+            
             } else if let responce = responce as? HTTPURLResponse {
-                print("Error status from server: \(responce.statusCode)\n")
+                print("Error status from server: \(HTTPURLResponse.localizedString(forStatusCode: responce.statusCode))\n")
                 return
             }
         }.resume()
     }
 
-    func jsonDecoder(data: Data) {
+    private func jsonDecoder(data: Data) {
         let decoder = JSONDecoder()
         do {
             let decoded = try decoder.decode(Cards.self, from: data)
 
-//            cards = decoded.card
             DispatchQueue.main.async {
-                self.printInfoAbout(decoded.cards)
+                Printer.printInfoAbout(decoded)
             }
-
-
 
         } catch {
             print("Failed to decode JSON")
         }
-    }
-
-    func printInfoAbout(_ cards: [Card]) {
-   _ = cards.map {  card in
-        print("""
-    ****************************************************
-
-    Название карты: \(card.name)
-    Мана: \(card.manaCost  ?? "Не требует маны")
-    Тип карты: \(card.typeOfCard)
-    Редкость: \(card.rarity)
-    Название сета: \(card.setName)
-    Художник: \(card.artist)
-
-    """)
-      }
-        print("Количество полученных карт: \(cards.count)")
     }
 }

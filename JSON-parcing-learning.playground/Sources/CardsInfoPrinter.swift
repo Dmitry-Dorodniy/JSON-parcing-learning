@@ -1,7 +1,7 @@
 import Foundation
 
 public class Printer {
-func printInfoAbout(_ cards: Cards) {
+static func printInfoAbout(_ cards: Cards) {
     _ = cards.cards.map {  card in
         print("""
     ****************************************************
