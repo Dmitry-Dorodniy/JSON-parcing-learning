@@ -14,7 +14,7 @@ let blackLotusUrl = makeRequestUrl(masterUrl: masterServerURL,
 network.getDataFrom(urlRequest: blackLotusUrl)
 
 // MARK: - Get Opt Card
-urlCardName = URLQueryItem(name: "name", value: "Opt")
+urlCardName = URLQueryItem(name: "name", value: "Opt".inDoubleQuote())
 let optUrl = makeRequestUrl(masterUrl: masterServerURL,
                                    path: urlPath,
                                    queryItems: [urlCardName])

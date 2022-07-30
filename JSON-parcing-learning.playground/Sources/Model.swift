@@ -2,6 +2,24 @@ import Foundation
 
 struct Cards: Codable {
     let cards: [Card]
+
+    static func printInfoAbout(_ cards: Cards) {
+        _ = cards.cards.map {  card in
+            guard card.name == "Opt" || card.name == "Black Lotus" else { return }
+            print("""
+    ****************************************************
+
+    Название карты: \(card.name)
+    Мана: \(card.manaCost  ?? "Не требует маны")
+    Тип карты: \(card.typeOfCard)
+    Редкость: \(card.rarity)
+    Название сета: \(card.setName)
+    Художник: \(card.artist)
+
+    """)
+        }
+        print("Количество полученных карт: \(cards.cards.count)\n\n")
+    }
 }
 
 struct Card: Codable {
