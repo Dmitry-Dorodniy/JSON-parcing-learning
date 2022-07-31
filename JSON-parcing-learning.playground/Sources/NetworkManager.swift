@@ -10,7 +10,7 @@ public class NetworkManager {
         let configuration = URLSessionConfiguration.default
         configuration.allowsCellularAccess = true
         configuration.waitsForConnectivity = true
-        configuration.timeoutIntervalForRequest = 20
+        configuration.timeoutIntervalForResource = 10
         return configuration
     }()
 

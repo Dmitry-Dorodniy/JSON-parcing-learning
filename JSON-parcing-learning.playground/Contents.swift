@@ -14,7 +14,9 @@ let cardsUrl = makeRequestUrl(masterUrl: masterServerURL,
 network.getDataFrom(urlRequest: cardsUrl) { result in
     switch result {
     case .success(let cards):
-        Cards.printInfoAbout(cards)
+        DispatchQueue.main.async {
+            Cards.printInfoAbout(cards)
+        }
     case .failure(let error):
         print("Error: \(error.localizedDescription )")
         break
