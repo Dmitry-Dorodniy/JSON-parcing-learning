@@ -1,9 +1,9 @@
 import Foundation
 
-struct Cards: Codable {
+public struct Cards: Codable {
     let cards: [Card]
 
-    static func printInfoAbout(_ cards: Cards) {
+    public static func printInfoAbout(_ cards: Cards) {
 
         var printingCount = 0
 
@@ -49,3 +49,4 @@ struct Card: Codable {
         case artist
     }
 }
+

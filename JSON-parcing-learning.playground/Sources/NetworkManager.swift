@@ -14,7 +14,7 @@ public class NetworkManager {
         return configuration
     }()
 
-    public func getDataFrom(urlRequest: URL?) {
+    public func getDataFrom(urlRequest: URL?, complition: @escaping (Result<Cards,Error>) -> Void) {
 
         let session = URLSession(configuration: sessionConfiguration)
         guard let url = urlRequest else { return }
@@ -24,7 +24,7 @@ public class NetworkManager {
             guard let strongSelf = self else { return }
 
             if error != nil {
-                print("Error: \(error?.localizedDescription ?? "")")
+                complition(.failure(error!))
 
             } else if let responce = responce as? HTTPURLResponse, responce.statusCode == 200 {
                 print("Success server status: \(HTTPURLResponse.localizedString(forStatusCode: responce.statusCode))\n")
@@ -32,9 +32,8 @@ public class NetworkManager {
 
                 do {
                     let decoded = try strongSelf.decoder.decode(Cards.self, from: data)
-
                     DispatchQueue.main.async {
-                        Cards.printInfoAbout(decoded)
+                        complition(.success(decoded))
                     }
                 } catch {
                     print("Failed to decode JSON")

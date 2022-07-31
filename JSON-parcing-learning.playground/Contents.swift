@@ -11,4 +11,12 @@ let cardsUrl = makeRequestUrl(masterUrl: masterServerURL,
                               path: urlPath,
                               queryItems: queryItem)
 
-network.getDataFrom(urlRequest: cardsUrl)
+network.getDataFrom(urlRequest: cardsUrl) { result in
+    switch result {
+    case .success(let cards):
+        Cards.printInfoAbout(cards)
+    case .failure(let error):
+        print("Error: \(error.localizedDescription )")
+        break
+    }
+}
