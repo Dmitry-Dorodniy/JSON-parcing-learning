@@ -1,16 +1,24 @@
-import UIKit
+import Foundation
 
-let magicCard = "https://api.magicthegathering.io/v1/cards?name=Lotus"
-
-//getData(urlRequest: magicCard)
+let network = NetworkManager()
 
 let masterServerURL = "https://api.magicthegathering.io"
 let urlPath = "/v1/cards"
-var urlCardName = URLQueryItem(name: "name", value: "Black Lotus")
 
-
-let magicUrl = makeRequestUrl(masterUrl: masterServerURL,
+// MARK: - Get Cards
+var queryItem = [URLQueryItem(name: "name", value: "Black Lotus|Opt")]
+let cardsUrl = makeRequestUrl(masterUrl: masterServerURL,
                               path: urlPath,
-                              queryItems: [urlCardName])
+                              queryItems: queryItem)
 
-getData(urlRequest: magicUrl)
+network.getDataFrom(urlRequest: cardsUrl) { result in
+    switch result {
+    case .success(let cards):
+        DispatchQueue.main.async {
+            Cards.printInfoAbout(cards)
+        }
+    case .failure(let error):
+        print("Error: \(error.localizedDescription )")
+        break
+    }
+}
